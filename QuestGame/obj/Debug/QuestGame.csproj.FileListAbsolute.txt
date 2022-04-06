@@ -1,0 +1,7 @@
+D:\Interview project\ConsoleApplication1\QuestGame\bin\Debug\QuestGame.exe
+D:\Interview project\ConsoleApplication1\QuestGame\bin\Debug\QuestGame.pdb
+D:\Interview project\ConsoleApplication1\QuestGame\obj\Debug\QuestGame.csproj.AssemblyReference.cache
+D:\Interview project\ConsoleApplication1\QuestGame\obj\Debug\QuestGame.csproj.SuggestedBindingRedirects.cache
+D:\Interview project\ConsoleApplication1\QuestGame\obj\Debug\QuestGame.csproj.CoreCompileInputs.cache
+D:\Interview project\ConsoleApplication1\QuestGame\obj\Debug\QuestGame.exe
+D:\Interview project\ConsoleApplication1\QuestGame\obj\Debug\QuestGame.pdb

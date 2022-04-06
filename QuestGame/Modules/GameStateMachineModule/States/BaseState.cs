@@ -5,18 +5,15 @@ using QuestGame.Modules.CharacterModule;
 
 namespace QuestGame.Modules.GameStateMachineModule.States
 {
-    public abstract class BaseState
+    public abstract class BaseState : IState
     {
         public string Name;
-        public string Description;
         public List<ICharacter> Characters;
-        
-        public ICommand StartCommand;
+        public IRoomCommand StartCommand;
 
-        protected BaseState(string name, string description, List<ICharacter> characters, ICommand startCommand)
+        protected BaseState(string name, List<ICharacter> characters, IRoomCommand startCommand)
         {
             Name = name;
-            Description = description;
             Characters = characters;
             StartCommand = startCommand;
         }

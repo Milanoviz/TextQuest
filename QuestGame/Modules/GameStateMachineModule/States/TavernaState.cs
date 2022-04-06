@@ -6,8 +6,8 @@ namespace QuestGame.Modules.GameStateMachineModule.States
 {
     public class TavernaState : BaseState
     {
-        public TavernaState(string name, string description, List<ICharacter> characters, ICommand startCommand) 
-            : base(name, description, characters, startCommand)
+        public TavernaState(string name, List<ICharacter> characters, IRoomCommand startCommand) 
+            : base(name, characters, startCommand)
         {
         }
 

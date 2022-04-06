@@ -3,17 +3,19 @@ using QuestGame.Modules.GameStateMachineModule.States;
 
 namespace QuestGame.Commands.RoomCommands
 {
-    public class LookAroundCommand : ICommand
+    public class LookAroundCommand : IRoomCommand
     {
-        private BaseState _invokerState;
-        private ICommand _previousCommand;
-        public string Description { get; } = "Осмотреть комнату";
+        public string Description { get; }
 
-        public void Execute()
+        public LookAroundCommand()
         {
-            Console.WriteLine("Вы осмотрели комнату");
-            Console.WriteLine(_invokerState.Description);
-            _previousCommand.Execute();
+            Description = "Осмотреть комнату";
+        }
+        
+        public void Execute(IRoomCommand previousCommand)
+        {
+            Console.WriteLine("Вы осмотрели комнату" + "\n");
+            previousCommand.Execute(this);
         }
     }
 }

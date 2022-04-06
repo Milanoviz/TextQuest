@@ -5,13 +5,20 @@ using QuestGame.Modules.CharacterModule;
 
 namespace QuestGame.Commands.RoomCommands
 {
-    public class StartDialogueCommand : ICommand
+    public class StartDialogueCommand : IRoomCommand
     {
         private List<ICharacter> Characters;
-        private ICommand _previousCommand;
-        public string Description { get; } = "Начать диалог";
+        public string Description { get; }
 
-        public void Execute()
+
+        public StartDialogueCommand(List<ICharacter> characters)
+        {
+            Characters = characters;
+            
+            Description = "Начать диалог";
+        }
+
+        public void Execute(IRoomCommand previousCommand)
         {
             if (Characters.Count > 0)
             {
@@ -23,7 +30,7 @@ namespace QuestGame.Commands.RoomCommands
                     Console.WriteLine($"{optionNumber}. {Characters[i].Name}");
                 }
                 
-                var optionsCount = Characters.Count - 1;
+                var optionsCount = Characters.Count;
 
                 var number = DialogueHelper.GetIntInRange(optionsCount);
 
@@ -33,8 +40,8 @@ namespace QuestGame.Commands.RoomCommands
             }
             else
             {
-                Console.WriteLine("В комнате никого нет");
-                _previousCommand.Execute();
+                Console.WriteLine("В комнате никого нет" +  "\n");
+                previousCommand.Execute(this);
             }
             
         }

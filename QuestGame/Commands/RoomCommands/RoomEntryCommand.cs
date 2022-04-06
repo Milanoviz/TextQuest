@@ -5,13 +5,21 @@ using QuestGame.Modules.CharacterModule;
 
 namespace QuestGame.Commands.RoomCommands
 {
-    public class RoomEntryCommand : ICommand
+    public class RoomEntryCommand : IRoomCommand
     {
-        public List<ICommand> Commands;
+        public List<IRoomCommand> Commands;
 
-        public string Description { get; } = "Выберите действие";
+        public string Description { get; }
 
-        public void Execute()
+
+        public RoomEntryCommand(List<IRoomCommand> commands)
+        {
+            Commands = commands;
+
+            Description = "Выберите действие:";
+        }
+
+        public void Execute(IRoomCommand previousCommand)
         {
             List<ICharacter> characters = new List<ICharacter>();
             
@@ -23,13 +31,13 @@ namespace QuestGame.Commands.RoomCommands
                 Console.WriteLine($"{optionNumber}. {Commands[i].Description}");
             }
             
-            var optionsCount = Commands.Count - 1;
+            var optionsCount = Commands.Count;
             
             var number = DialogueHelper.GetIntInRange(optionsCount);
 
             var index = number - 1;
             
-            Commands[index].Execute();
+            Commands[index].Execute(this);
         }
     }
 }

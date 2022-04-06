@@ -17,12 +17,11 @@ namespace QuestGame.Modules.PlayerModule
         
         public void AddToBalance(int amount)
         {
-            
+            _wallet.AddToBalance(amount);
         }
 
         public void RemoveFromBalance(int amount)
         {
-            
-        }
+            _wallet.RemoveFromBalance(amount);        }
     }
 }

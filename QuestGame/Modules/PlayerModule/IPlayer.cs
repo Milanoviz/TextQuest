@@ -1,10 +1,9 @@
+using QuestGame.Modules.WalletModule;
+
 namespace QuestGame.Modules.PlayerModule
 {
-    public interface IPlayer
+    public interface IPlayer : IOwnerWallet
     {
         string Name { get; }
-        int CurrentBalance { get; }
-        void AddToBalance(int amount);
-        void RemoveFromBalance(int amount);
     }
 }

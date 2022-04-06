@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using QuestGame.Commands;
-using QuestGame.Commands.CharactersCommands;
 using QuestGame.Commands.RoomCommands;
-using QuestGame.GameDataModel.Providers;
+using QuestGame.Factories;
 using QuestGame.Helpers;
 using QuestGame.Modules.CharacterModule;
 using QuestGame.Modules.GameStateMachineModule.States;
@@ -13,73 +12,120 @@ namespace QuestGame.Modules.GameStateMachineModule
     public class GameStateMachine
     {
         public BaseState ActiveState => _activeState;
-        public List<ICharacter> AllCharacters => _allCharacters;
+
+        private readonly ICharactersFactory _characterFactory;
 
         private readonly List<BaseState> _allStates;
-        private readonly List<ICharacter> _allCharacters;
-        
-        private BaseState _activeState;
-        
-        public GameStateMachine(ICharactersDataModelProvider charactersDataModelProvider)
-        {
-            _allStates = new List<BaseState>();
-            _allCharacters = new List<ICharacter>();
 
-            InitializeTavernaState(charactersDataModelProvider);
+        private BaseState _activeState;
+
+        public GameStateMachine(ICharactersFactory characterFactory)
+        {
+            _characterFactory = characterFactory;
+            _allStates = new List<BaseState>();
+
+            InitializeTavernaState();
+            InitializeBrothelState();
+            InitializeTownState();
         }
 
-        private void InitializeTavernaState(ICharactersDataModelProvider charactersDataModelProvider)
+        #region Initialization States
+        private void InitializeTavernaState()
         {
+            var name = "Таверна";
+            
             var characters = new List<ICharacter>()
             {
-                CreateCharacter(CharacterType.Tramp, charactersDataModelProvider),
-                CreateCharacter(CharacterType.Barman, charactersDataModelProvider),
-                
+                _characterFactory.CreateCharacter(CharacterType.Tramp),
+                _characterFactory.CreateCharacter(CharacterType.Barman),
             };
 
             var lookAroundCommand = new LookAroundCommand();
             var startDialogueCommand = new StartDialogueCommand(characters);
-            
+            var choiceDirectionCommand = new ChoiceDirectionCommand(this, _allStates, name);
+
             var startCommand = new RoomEntryCommand(new List<IRoomCommand>()
             {
                 lookAroundCommand,
                 startDialogueCommand,
+                choiceDirectionCommand,
             });
+
+            var tavernaState = new TavernaState(name, characters, startCommand);
             
-            var tavernaState = new TavernaState("Таверна", characters, startCommand);
+            _allStates.Add(tavernaState);
+        }
+        
+        private void InitializeBrothelState()
+        {
+            var name = "Бордель";
+            
+            var characters = new List<ICharacter>()
+            {
+                _characterFactory.CreateCharacter(CharacterType.Tramp),
+            };
+
+            var lookAroundCommand = new LookAroundCommand();
+            var startDialogueCommand = new StartDialogueCommand(characters);
+            var choiceDirectionCommand = new ChoiceDirectionCommand(this, _allStates, name);
+
+            var startCommand = new RoomEntryCommand(new List<IRoomCommand>()
+            {
+                lookAroundCommand,
+                startDialogueCommand,
+                choiceDirectionCommand,
+            });
+
+            var tavernaState = new BrothelState(name, characters, startCommand);
             
             _allStates.Add(tavernaState);
         }
 
-        private ICharacter CreateCharacter(CharacterType type, ICharactersDataModelProvider charactersDataModelProvider)
+        private void InitializeTownState()
         {
-            var newCharacter = new Character(charactersDataModelProvider.GetCharacterDataModelOfType(type));
+            var name = "Город";
             
-            _allCharacters.Add(newCharacter);
+            var characters = new List<ICharacter>()
+            {
+                _characterFactory.CreateCharacter(CharacterType.Tramp),
+                _characterFactory.CreateCharacter(CharacterType.Barman),
+            };
 
-            return newCharacter;
+            var lookAroundCommand = new LookAroundCommand();
+            var choiceDirectionCommand = new ChoiceDirectionCommand(this, _allStates, name);
+            
+            var startCommand = new RoomEntryCommand(new List<IRoomCommand>()
+            {
+                lookAroundCommand,
+                choiceDirectionCommand,
+            });
+
+            var tavernaState = new TownState(name, characters, startCommand);
+            
+            _allStates.Add(tavernaState);
         }
+        #endregion
         
         public void Enter<TState>() where TState : BaseState
         {
             BaseState state = ChangeState<TState>();
             state.Enter();
         }
-        
+
         private TState ChangeState<TState>() where TState : BaseState
         {
             _activeState?.Exit();
-            
+
             var state = GetState<TState>();
             _activeState = state;
-            
+
             return state;
         }
 
         private TState GetState<TState>() where TState : BaseState
         {
             var state = _allStates.FirstOrDefault(s => s is TState);
-            
+
             return state as TState;
         }
     }

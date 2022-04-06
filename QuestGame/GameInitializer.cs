@@ -1,3 +1,4 @@
+using QuestGame.Factories;
 using QuestGame.GameDataModel.Models;
 using QuestGame.GameDataModel.Providers;
 using QuestGame.Modules.GameStateMachineModule;
@@ -15,10 +16,12 @@ namespace QuestGame
 
             var charactersConfig = new CharactersConfig();
             var charactersDataProvider = new CharactersDataModelProvider(charactersConfig);
+
+            var characterFactory = new CharacterFactory(charactersDataProvider);
             
-            GameStateMachine = new GameStateMachine(charactersDataProvider);
+            GameStateMachine = new GameStateMachine(characterFactory);
             
-            var gameFacade = new GameFacade(player, GameStateMachine);
+            var characterListener = new CharacterListener(player, GameStateMachine, characterFactory);
         }
     }
 }

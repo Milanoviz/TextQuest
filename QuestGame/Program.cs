@@ -1,4 +1,5 @@
-﻿using QuestGame.Modules.GameStateMachineModule.States;
+﻿using System;
+using QuestGame.Modules.GameStateMachineModule.States;
 
 namespace QuestGame
 {
@@ -6,8 +7,11 @@ namespace QuestGame
     {
         public static void Main(string[] args)
         {
-            var game = new GameInitializer("Артём");
-            game.GameStateMachine.Enter<TavernaState>();
+            Console.WriteLine("Пожалуйста, введите ваше имя:");
+            var playerName = Console.ReadLine();
+            
+            var game = new GameInitializer(playerName);
+            game.GameStateMachine.Enter<TownState>();
         }
     }
 }

@@ -1,24 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using QuestGame.Factories;
 using QuestGame.Modules.CharacterModule;
 using QuestGame.Modules.GameStateMachineModule;
-using QuestGame.Modules.GameStateMachineModule.States;
 using QuestGame.Modules.PlayerModule;
 
 namespace QuestGame
 {
-    public class GameFacade
+    public class CharacterListener
     {
         private readonly IPlayer _player;
         private readonly GameStateMachine _gameStateMachine;
-        
-        private List<ICharacter> _characters => _gameStateMachine.AllCharacters;
+        private readonly ICharactersFactory _charactersFactory;
 
-        public GameFacade(IPlayer player, GameStateMachine gameStateMachine)
+        private List<ICharacter> _characters => _charactersFactory.AllCharacters;
+
+        public CharacterListener(IPlayer player, GameStateMachine gameStateMachine, ICharactersFactory charactersFactory)
         {
             _player = player;
             _gameStateMachine = gameStateMachine;
+            _charactersFactory = charactersFactory;
 
             Initialize();
         }

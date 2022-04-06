@@ -1,43 +1,40 @@
 using System;
 using System.Collections.Generic;
 using QuestGame.Helpers;
-using QuestGame.Modules.CharacterModule;
 
 namespace QuestGame.Commands.RoomCommands
 {
     public class RoomEntryCommand : IRoomCommand
     {
-        public List<IRoomCommand> Commands;
-
         public string Description { get; }
+        
+        private readonly List<IRoomCommand> _commands;
 
 
         public RoomEntryCommand(List<IRoomCommand> commands)
         {
-            Commands = commands;
+            _commands = commands;
 
             Description = "Выберите действие:";
         }
 
         public void Execute(IRoomCommand previousCommand)
         {
-            List<ICharacter> characters = new List<ICharacter>();
-            
             Console.WriteLine(Description);
 
-            for (int i = 0; i < Commands.Count; i++)
+            for (int i = 0; i < _commands.Count; i++)
             {
                 var optionNumber = i + 1;
-                Console.WriteLine($"{optionNumber}. {Commands[i].Description}");
+                Console.WriteLine($"{optionNumber}. {_commands[i].Description}");
             }
             
-            var optionsCount = Commands.Count;
+            var optionsCount = _commands.Count;
             
             var number = DialogueHelper.GetIntInRange(optionsCount);
 
             var index = number - 1;
             
-            Commands[index].Execute(this);
+            _commands[index].Execute(this);
         }
     }
 }

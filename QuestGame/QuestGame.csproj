@@ -39,20 +39,24 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Factories\CharacterFactory.cs" />
         <Compile Include="Commands\CharactersCommands\LeaveAloneCommand.cs" />
         <Compile Include="Commands\CharactersCommands\RobCommand.cs" />
         <Compile Include="Commands\CharactersCommands\SpendCoinsCommand.cs" />
         <Compile Include="Commands\CharactersCommands\StartCharacterCharacterCommand.cs" />
         <Compile Include="Commands\ICharacterCommand.cs" />
+        <Compile Include="Commands\IRoomCommand.cs" />
+        <Compile Include="Commands\RoomCommands\ChoiceDirectionCommand.cs" />
         <Compile Include="Commands\RoomCommands\LookAroundCommand.cs" />
         <Compile Include="Commands\RoomCommands\RoomEntryCommand.cs" />
         <Compile Include="Commands\RoomCommands\StartDialogueCommand.cs" />
+        <Compile Include="Factories\ICharactersFactory.cs" />
         <Compile Include="GameDataModel\Dialogue.cs" />
         <Compile Include="GameDataModel\Models\CharacterDataModel.cs" />
         <Compile Include="GameDataModel\Models\CharactersConfig.cs" />
         <Compile Include="GameDataModel\Providers\CharactersDataModelProvider.cs" />
         <Compile Include="GameDataModel\Providers\ICharactersDataModelProvider.cs" />
-        <Compile Include="GameFacade.cs" />
+        <Compile Include="CharacterListener.cs" />
         <Compile Include="GameInitializer.cs" />
         <Compile Include="Helpers\CharacterType.cs" />
         <Compile Include="Helpers\DialogueHelper.cs" />
@@ -60,9 +64,10 @@
         <Compile Include="Modules\CharacterModule\Character.cs" />
         <Compile Include="Modules\CharacterModule\ICharacter.cs" />
         <Compile Include="Modules\GameStateMachineModule\GameStateMachine.cs" />
-        <Compile Include="Modules\GameStateMachineModule\IState.cs" />
         <Compile Include="Modules\GameStateMachineModule\States\BaseState.cs" />
+        <Compile Include="Modules\GameStateMachineModule\States\BrothelState.cs" />
         <Compile Include="Modules\GameStateMachineModule\States\TavernaState.cs" />
+        <Compile Include="Modules\GameStateMachineModule\States\TownState.cs" />
         <Compile Include="Modules\PlayerModule\IPlayer.cs" />
         <Compile Include="Modules\PlayerModule\Player.cs" />
         <Compile Include="Modules\WalletModule\IOwnerWallet.cs" />

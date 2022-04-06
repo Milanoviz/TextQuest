@@ -5,7 +5,7 @@ using QuestGame.Modules.CharacterModule;
 
 namespace QuestGame.Modules.GameStateMachineModule.States
 {
-    public abstract class BaseState : IState
+    public abstract class BaseState
     {
         public string Name;
         public List<ICharacter> Characters;

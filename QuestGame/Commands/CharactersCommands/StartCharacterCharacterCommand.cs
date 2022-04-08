@@ -9,9 +9,10 @@ namespace QuestGame.Commands.CharactersCommands
 {
     public class StartCharacterCharacterCommand : ICharacterCommand
     {
+        public string Description { get; }
+        
         private List<Dialogue> _dialogues;
         private List<ICharacterCommand> _commands;
-        public string Description { get; }
 
         public StartCharacterCharacterCommand(List<Dialogue> dialogues, List<ICharacterCommand> commands)
         {
@@ -34,7 +35,7 @@ namespace QuestGame.Commands.CharactersCommands
             
             foreach (var element in currentDialogue.DialogueText)
             {
-                Console.WriteLine("- " + element);
+                Console.WriteLine(element);
             }
         }
 

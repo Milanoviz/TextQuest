@@ -22,15 +22,10 @@ namespace QuestGame.Commands.CharactersCommands
         {
             invoker.TakeCoins(_coinsCount);
 
-            if (invoker.IsTransactionCompleted)
-            {
-                Console.WriteLine($"{invoker.Name} - {_descriptionAfterPurchase}");
-            }
-            else
-            {
-                Console.WriteLine($"{invoker.Name} - У тебя недостаточно денег. Возвращайся когда их раздабудешь.");
-            }
-            
+            Console.WriteLine(invoker.IsTransactionCompleted
+                ? $"{invoker.Name} - {_descriptionAfterPurchase}"
+                : $"{invoker.Name} - 'У тебя недостаточно денег. Возвращайся когда их раздабудешь.'");
+
             invoker.StopDialogue();
         }
     }

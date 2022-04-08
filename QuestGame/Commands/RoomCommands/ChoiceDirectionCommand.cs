@@ -26,8 +26,15 @@ namespace QuestGame.Commands.RoomCommands
         public void Execute(IRoomCommand previousCommand = null)
         {
             Console.WriteLine("Куда бы вы хотели отправиться?");
+            
+            ShowOptions(out var availableRoomNames);
+            
+            SwitchRoom(availableRoomNames);
+        }
 
-            var availableRoomNames = new List<string>();
+        private void ShowOptions(out List<string> availableRoomNames)
+        {
+            availableRoomNames = new List<string>();
             
             var optionsNumber = 0;
 
@@ -39,11 +46,12 @@ namespace QuestGame.Commands.RoomCommands
                     availableRoomNames.Add(state.Name);
                 }
             }
-            
-            var optionsCount = _allStates.Count - 1;
-            
-            var number = DialogueHelper.GetIntInRange(optionsCount);
+        }
 
+        private void SwitchRoom(List<string> availableRoomNames)
+        {
+            var optionsCount = _allStates.Count - 1;
+            var number = DialogueHelper.GetIntInRange(optionsCount);
             var index = number - 1;
 
             var nextRoomName = availableRoomNames[index];
@@ -59,8 +67,10 @@ namespace QuestGame.Commands.RoomCommands
                 case "Бордель":
                     _gameStateMachine.Enter<BrothelState>();
                     break;
+                case "Пристань":
+                    _gameStateMachine.Enter<PierState>();
+                    break;
             }
-
         }
     }
 }

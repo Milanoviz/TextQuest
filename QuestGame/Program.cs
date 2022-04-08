@@ -1,5 +1,4 @@
 ﻿using System;
-using QuestGame.Modules.GameStateMachineModule.States;
 
 namespace QuestGame
 {
@@ -10,8 +9,7 @@ namespace QuestGame
             Console.WriteLine("Пожалуйста, введите ваше имя:");
             var playerName = Console.ReadLine();
             
-            var game = new GameInitializer(playerName);
-            game.GameStateMachine.Enter<TownState>();
+            var gameInitializer = new GameInitializer(playerName);
         }
     }
 }

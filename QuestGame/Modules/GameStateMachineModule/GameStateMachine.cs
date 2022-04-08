@@ -26,6 +26,7 @@ namespace QuestGame.Modules.GameStateMachineModule
 
             InitializeTavernaState();
             InitializeBrothelState();
+            InitializePierState();
             InitializeTownState();
         }
 
@@ -36,11 +37,11 @@ namespace QuestGame.Modules.GameStateMachineModule
             
             var characters = new List<ICharacter>()
             {
-                _characterFactory.CreateCharacter(CharacterType.Tramp),
                 _characterFactory.CreateCharacter(CharacterType.Barman),
+                _characterFactory.CreateCharacter(CharacterType.Tramp),
             };
 
-            var lookAroundCommand = new LookAroundCommand();
+            var lookAroundCommand = new LookAroundCommand(characters);
             var startDialogueCommand = new StartDialogueCommand(characters);
             var choiceDirectionCommand = new ChoiceDirectionCommand(this, _allStates, name);
 
@@ -62,10 +63,10 @@ namespace QuestGame.Modules.GameStateMachineModule
             
             var characters = new List<ICharacter>()
             {
-                _characterFactory.CreateCharacter(CharacterType.Tramp),
+                _characterFactory.CreateCharacter(CharacterType.Angelica),
             };
 
-            var lookAroundCommand = new LookAroundCommand();
+            var lookAroundCommand = new LookAroundCommand(characters);
             var startDialogueCommand = new StartDialogueCommand(characters);
             var choiceDirectionCommand = new ChoiceDirectionCommand(this, _allStates, name);
 
@@ -80,23 +81,49 @@ namespace QuestGame.Modules.GameStateMachineModule
             
             _allStates.Add(tavernaState);
         }
+        
+        private void InitializePierState()
+        {
+            var name = "Пристань";
+            
+            var characters = new List<ICharacter>()
+            {
+                _characterFactory.CreateCharacter(CharacterType.Robber),
+            };
+
+            var lookAroundCommand = new LookAroundCommand(characters);
+            var startDialogueCommand = new StartDialogueCommand(characters);
+            var choiceDirectionCommand = new ChoiceDirectionCommand(this, _allStates, name);
+
+            var startCommand = new RoomEntryCommand(new List<IRoomCommand>()
+            {
+                lookAroundCommand,
+                startDialogueCommand,
+                choiceDirectionCommand,
+            });
+
+            var pierState = new PierState(name, characters, startCommand);
+            
+            _allStates.Add(pierState);
+        }
 
         private void InitializeTownState()
         {
             var name = "Город";
-            
+
             var characters = new List<ICharacter>()
             {
                 _characterFactory.CreateCharacter(CharacterType.Tramp),
-                _characterFactory.CreateCharacter(CharacterType.Barman),
             };
 
-            var lookAroundCommand = new LookAroundCommand();
+            var lookAroundCommand = new LookAroundCommand(characters);
+            var startDialogueCommand = new StartDialogueCommand(characters);
             var choiceDirectionCommand = new ChoiceDirectionCommand(this, _allStates, name);
             
             var startCommand = new RoomEntryCommand(new List<IRoomCommand>()
             {
                 lookAroundCommand,
+                startDialogueCommand,
                 choiceDirectionCommand,
             });
 

@@ -22,7 +22,10 @@ namespace QuestGame.Modules.WalletModule
 
         public void RemoveFromBalance(int amount)
         {
-            _coinsAmount -= amount;
+            if (_coinsAmount >= amount)
+            {
+                _coinsAmount -= amount;
+            }
         }
     }
 }

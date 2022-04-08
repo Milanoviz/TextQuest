@@ -4,11 +4,12 @@ using QuestGame.Modules.CharacterModule;
 
 namespace QuestGame.Modules.GameStateMachineModule.States
 {
-    public class BrothelState : BaseState
+    public class PierState : BaseState
     {
-        public BrothelState(string name, List<ICharacter> characters, IRoomCommand startCommand) 
+        public PierState(string name, List<ICharacter> characters, IRoomCommand startCommand) 
             : base(name, startCommand)
         {
+            
         }
     }
 }

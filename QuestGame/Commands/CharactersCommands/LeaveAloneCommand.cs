@@ -20,7 +20,7 @@ namespace QuestGame.Commands.CharactersCommands
 
         public void Execute(ICharacter invoker)
         {
-            Console.WriteLine(_reactionDescription);
+            Console.WriteLine($"{invoker.Name} - {_reactionDescription}");
             
             invoker.StopDialogue(_isGameOver);
         }

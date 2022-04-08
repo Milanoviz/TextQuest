@@ -7,7 +7,7 @@ namespace QuestGame.Modules.GameStateMachineModule.States
     public class TownState : BaseState
     {
         public TownState(string name, List<ICharacter> characters, IRoomCommand startCommand) 
-            : base(name, characters, startCommand)
+            : base(name, startCommand)
         {
             
         }

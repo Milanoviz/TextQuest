@@ -7,9 +7,7 @@ using QuestGame.Modules.PlayerModule;
 namespace QuestGame
 {
     public class GameInitializer
-    { 
-        public GameStateMachine GameStateMachine { get; }
-
+    {
         public GameInitializer(string playerName)
         {
             var player = new Player(playerName);
@@ -19,9 +17,11 @@ namespace QuestGame
 
             var characterFactory = new CharacterFactory(charactersDataProvider);
             
-            GameStateMachine = new GameStateMachine(characterFactory);
+            var gameStateMachine = new GameStateMachine(characterFactory);
             
-            var characterListener = new CharacterListener(player, GameStateMachine, characterFactory);
+            var characterListener = new CharacterListener(player, gameStateMachine, characterFactory);
+
+            var gameBootstrapper = new GameBootstrapper(player, gameStateMachine);
         }
     }
 }

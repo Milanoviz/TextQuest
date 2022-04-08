@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using QuestGame.Factories;
+using QuestGame.Helpers;
 using QuestGame.Modules.CharacterModule;
 using QuestGame.Modules.GameStateMachineModule;
 using QuestGame.Modules.PlayerModule;
@@ -31,6 +32,18 @@ namespace QuestGame
                 character.CharacterRobbed += HandleCharacterRobbed;
                 character.DialogueCompleted += HandleDialogueCompleted;
                 character.TookCoins += HandleTookCoins;
+                character.Killed += HandleKilled;
+            }
+        }
+
+        private void HandleKilled(object sender, CharacterType type)
+        {
+            if (type == CharacterType.Robber)
+            {
+                Console.WriteLine($"Поздравяем Вас, сэр {_player.Name}! Вы уничтожили грабителя обокравшего вас и вернули свои вещи!");
+                Console.WriteLine("Теперь вы можете вернуться домой с чувством выполненного долга!");
+                Console.WriteLine();
+                Console.WriteLine("Конец игры!");
             }
         }
 
@@ -71,8 +84,8 @@ namespace QuestGame
         {
             _player.AddToBalance(amount);
             
-            Console.WriteLine($"Вы получили {amount} монет");
-            Console.WriteLine($"Теперь ваш баланс составляет {_player.CurrentBalance} монет");
+            Console.WriteLine($"Вы получили {amount} монет.");
+            Console.WriteLine($"Теперь ваш баланс составляет {_player.CurrentBalance} монет.");
         }
     }
 }

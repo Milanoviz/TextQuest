@@ -11,6 +11,7 @@ namespace QuestGame.Modules.CharacterModule
         public event EventHandler<int> CharacterRobbed;
         public event EventHandler<bool> DialogueCompleted;
         public event EventHandler<int> TookCoins;
+        public event EventHandler<CharacterType> Killed;
 
         public CharacterType Type { get; }
         public string Name { get; }
@@ -53,6 +54,11 @@ namespace QuestGame.Modules.CharacterModule
             OnCharacterRobbed(currentBalance);
         }
 
+        public void Kill()
+        {
+            OnKilled();
+        }
+
         public void TakeCoins(int count)
         {
             OnTookCoins(count);
@@ -66,7 +72,8 @@ namespace QuestGame.Modules.CharacterModule
         private void OnCharacterRobbed(int coinsAmount)
         {
             CharacterRobbed?.Invoke(this, coinsAmount);
-        }        
+        }
+        
         private void OnDialogueCompleted(bool isGameOver)
         {
             DialogueCompleted?.Invoke(this, isGameOver);
@@ -75,6 +82,11 @@ namespace QuestGame.Modules.CharacterModule
         private void OnTookCoins(int count)
         {
             TookCoins?.Invoke(this, count);
+        }
+        
+        private void OnKilled()
+        {
+            Killed?.Invoke(this, Type);
         }
     }
 }

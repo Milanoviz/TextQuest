@@ -1,28 +1,27 @@
 using System;
-using System.Collections.Generic;
 using QuestGame.Commands;
-using QuestGame.Modules.CharacterModule;
 
 namespace QuestGame.Modules.GameStateMachineModule.States
 {
     public abstract class BaseState
     {
-        public string Name;
-        public List<ICharacter> Characters;
-        public IRoomCommand StartCommand;
+        public string Name => _name;
+        public IRoomCommand StartCommand => _startCommand;
 
-        protected BaseState(string name, List<ICharacter> characters, IRoomCommand startCommand)
+        private readonly string _name;
+        private readonly IRoomCommand _startCommand;
+        
+        protected BaseState(string name, IRoomCommand startCommand)
         {
-            Name = name;
-            Characters = characters;
-            StartCommand = startCommand;
+            _name = name;
+            _startCommand = startCommand;
         }
 
         public virtual void Enter()
         {
-            Console.WriteLine($"Вы находитесь в {Name}");
+            Console.WriteLine($"\nВы находитесь в {_name}");
             
-            StartCommand.Execute();
+            _startCommand.Execute();
         }
 
         public virtual void Exit()
